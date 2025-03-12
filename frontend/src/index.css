@@ -1,0 +1,54 @@
+@import "tailwindcss";
+
+@theme {
+  --font-raleway: Raleway, sans-serif;
+
+  --color-primaryYellow: #ffde79;
+  --color-secondaryOrange: #ff8b4d;
+  --color-accentPink: #ff4dbb;
+  --color-textGray: #4b4b4b;
+  --color-errorRed: #ff4d4d;
+}
+
+.rectangle {
+  position: absolute;
+  width: 250px;
+  height: 150px;
+  left: 20px;
+  top: 1200px;
+  background: rgba(214, 70, 195, 0.1);
+  filter: blur(34.5px);
+  border-radius: 70px;
+  z-index: -10;
+  transition: all 0.3s ease;
+}
+
+/* Small devices (sm) */
+@media (min-width: 640px) {
+  .rectangle {
+    width: 400px;
+    height: 250px;
+    left: 100px;
+    top: 1500px;
+  }
+}
+
+/* Medium devices (md) */
+@media (min-width: 768px) {
+  .rectangle {
+    width: 600px;
+    height: 300px;
+    left: 200px;
+    top: 1800px;
+  }
+}
+
+/* Large devices (lg) */
+@media (min-width: 1024px) {
+  .rectangle {
+    width: 892px;
+    height: 394px;
+    left: 338px;
+    top: 2079px;
+  }
+}

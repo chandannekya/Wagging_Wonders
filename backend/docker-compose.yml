@@ -1,0 +1,75 @@
+version: "3.8"
+
+networks:
+  mynetwork:
+    driver: bridge
+
+services:
+  gateway:
+    build: ./gateway
+    ports:
+      - "8000:8000"
+    env_file:
+      - ./gateway/.env
+    depends_on:
+      - auth-service
+      - chat-service
+      - pets-service
+    networks:
+      - mynetwork
+    restart: always
+
+  auth-service:
+    build: ./services/auth-service
+    ports:
+      - "5001:5001"
+    env_file:
+      - ./services/auth-service/.env
+    networks:
+      - mynetwork
+    restart: always
+
+  pets-service:
+    build: ./services/pets-service
+    ports:
+      - "5002:5002"
+    env_file:
+      - ./services/pets-service/.env
+    networks:
+      - mynetwork
+    restart: always
+
+  chat-service:
+    build: ./services/chat-service
+    ports:
+      - "5003:5003"
+    env_file:
+      - ./services/chat-service/.env
+    networks:
+      - mynetwork
+    restart: always
+
+  zookeeper:
+    image: wurstmeister/zookeeper:latest
+    ports:
+      - "2181:2181"
+    networks:
+      - mynetwork
+  kafka:
+    image: wurstmeister/kafka:latest
+    ports:
+      - "9092:9092"
+    expose:
+      - "9093"
+    environment:
+      KAFKA_ADVERTISED_LISTENERS: INSIDE://kafka:9093,OUTSIDE://localhost:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT
+      KAFKA_LISTENERS: INSIDE://0.0.0.0:9093,OUTSIDE://0.0.0.0:9092
+      KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_CREATE_TOPICS: "my-topic:1:1"
+
+    networks:
+      - mynetwork
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
