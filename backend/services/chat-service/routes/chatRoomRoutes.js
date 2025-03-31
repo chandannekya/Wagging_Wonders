@@ -10,7 +10,7 @@ const {
 
 const { auth } = require("../middelewares/Auth");
 
-router.post("/", auth, createChatRoom);
+router.post("/:id", auth, createChatRoom);
 router.get("/", auth, getChatRoomsByUser);
 
 router.delete("/:id", deleteChatRoom);

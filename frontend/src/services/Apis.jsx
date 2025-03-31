@@ -11,3 +11,11 @@ export const petsEndpoints = {
   ADOPT_PET: `${BASE_URL}pet/api/pet/adopt-pet/`,
   DONATE_PET: `${BASE_URL}pet/api/pet/donatePet`,
 };
+
+export const chatEndpoints = {
+  GET_CHATS: `${BASE_URL}chat/api/chatroom/`,
+  SEND_MESSAGE: `${BASE_URL}chat/api/message/`,
+  GET_CHAT: `${BASE_URL}chat/api/message/`,
+
+  CHATROOM: `${BASE_URL}chat/api/chatroom/`,
+};

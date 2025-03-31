@@ -75,7 +75,7 @@ const Petlisting = () => {
           )}
         </div>
       </div>
-      {/* Card Component */}
+
     </div>
   );
 };

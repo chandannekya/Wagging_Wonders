@@ -1,13 +1,27 @@
 const ChatRoom = require("../model/chatRoom");
 const Message = require("../model/message");
+const { getSocket, connectedUsers } = require("../config/socketIo");
 
 const sendMessage = async (req, res) => {
   try {
-    const { chatId, message, senderId, receiverId } = req.body;
+    const { chatId, message, receiverId } = req.body;
+    const senderId = req.user?.id;
+
     const newMessage = new Message({ chatId, message, senderId, receiverId });
     await newMessage.save();
+
+    await ChatRoom.findByIdAndUpdate(chatId, {
+      lastMessage: newMessage._id,
+      $push: { messages: newMessage._id },
+    });
+
+    const io = getSocket();
+
+    io.to(chatId).emit("receiveMessage", newMessage);
+
     res.status(201).json(newMessage);
   } catch (error) {
+    console.error("Error sending message:", error);
     res.status(500).json({ message: error.message });
   }
 };

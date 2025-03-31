@@ -9,6 +9,7 @@ const chatRoomRoutes = require("./routes/chatRoomRoutes");
 const messageRoutes = require("./routes/messageRoutes");
 const app = express();
 app.use(cookieParser());
+
 const server = http.createServer(app);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

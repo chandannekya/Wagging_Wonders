@@ -1,13 +1,14 @@
 const { default: axios } = require("axios");
 const ChatRoom = require("../model/chatRoom");
-const message = require("../model/message");
+
 const Message = require("../model/message");
 
 const createChatRoom = async (req, res) => {
   try {
-    const { user2 } = req.body;
-    const user1 = req.user.id;
+    const user2 = req.params.id;
 
+    const user1 = req.user.id;
+    console.log(user2);
     if (!user2) {
       return res.status(400).json({
         message: "participants required",
@@ -26,7 +27,6 @@ const createChatRoom = async (req, res) => {
       });
     }
 
-    // Create a new chatroom if it doesn't exist
     const chatRoom = new ChatRoom({ participants: [user1, user2] });
     await chatRoom.save();
 
@@ -44,7 +44,9 @@ const getChatRoomsByUser = async (req, res) => {
     // Get chat rooms where the user is a participant
     const chatRooms = await ChatRoom.find({
       participants: { $in: [userId] },
-    }).populate("participants");
+    })
+      .populate("participants")
+      .populate("lastMessage");
 
     // Get unique user IDs excluding the current user
     const userIds = [
@@ -63,7 +65,7 @@ const getChatRoomsByUser = async (req, res) => {
 
     // Fetch user details for all unique user IDs
     const usersdel = await axios.post(
-      "http://localhost:5001/api/auth/usersDel",
+      "http://auth-service:5001/api/auth/usersDel",
       { userIds }
     );
 

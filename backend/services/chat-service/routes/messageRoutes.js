@@ -8,9 +8,10 @@ const {
   deleteMessage,
   editMessage,
 } = require("../controllers/messageController");
+const { auth } = require("../middelewares/Auth");
 
-router.post("/", sendMessage);
-router.get("/:id", getMessagesByChatId);
+router.post("/", auth, sendMessage);
+router.get("/:id", auth, getMessagesByChatId);
 router.delete("/:id", deleteMessage);
 router.put("/:id", editMessage);
 

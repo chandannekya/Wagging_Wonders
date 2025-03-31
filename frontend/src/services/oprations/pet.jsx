@@ -52,8 +52,7 @@ export const donatePet = (data, navigate) => async (dispatch) => {
   const toastId = toast.loading("Processing....");
 
   try {
-    const token = localStorage.getItem("token");
-
+    const token = JSON.parse(localStorage.getItem("token")).value;
     // Create FormData object to handle file uploads properly
     const formData = new FormData();
 

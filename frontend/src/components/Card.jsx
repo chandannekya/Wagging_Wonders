@@ -3,9 +3,17 @@ import ButtonLink from "./ButtonLink";
 import { useNavigate } from "react-router-dom";
 import Pet from "../pages/Pet";
 
+import { getChatRoom } from "../services/oprations/chat";
+
 const Card = ({ Image, Name, Species, Breed, gender, id, data }) => {
   const navigate = useNavigate();
   console.log(data);
+  const chatClick = async () => {
+    const rsdata = await getChatRoom(data.postedBy);
+    navigate(`/chat/${data.postedBy}`);
+    console.log(rsdata);
+  };
+
   return (
     <div className="p-5  border-2 font-raleway border-gray-300 rounded-lg shadow-md">
       <div className="flex flex-col ">
@@ -44,9 +52,7 @@ const Card = ({ Image, Name, Species, Breed, gender, id, data }) => {
               Meet me
             </button>
             <button
-              onClick={() => {
-                navigate("/chat");
-              }}
+              onClick={chatClick}
               className="bg-amber-300 p-2 px-4 rounded-md hover:scale-105 transition-all"
             >
               Chat

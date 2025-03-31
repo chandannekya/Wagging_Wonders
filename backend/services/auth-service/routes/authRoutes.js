@@ -16,8 +16,8 @@ router.post("/login", loginUser);
 // router.put("/updateAdoptpet:id", updateAdoptpet);
 // router.put("/updateDonatedpet/:id", updateDonatedpet);
 router.put("/:id", updateUser);
-// router.get("/:id", getUsersById);
-// router.post("/usersDel", getalluserDetails);
+router.get("/:id", getUsersById);
+router.post("/usersDel", getalluserDetails);
 // router.put("/updateDeletedpet/:id", updateDeletePet);
 
 module.exports = router;

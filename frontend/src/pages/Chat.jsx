@@ -4,7 +4,7 @@ import Chatlist from "../components/Chatlist";
 const Chat = () => {
   return (
     <div>
-      <div className="flex">
+      <div className="flex w-screen h-screen">
         <div className="lg:w-1/4 md:w-1/3">
           <Chatlist />
         </div>

@@ -3,6 +3,7 @@ const Pet = require("../models/pet");
 const getAllpets = async (req, res) => {
   try {
     const pets = await Pet.find({ status: "Available" });
+    
 
     res.status(200).json(pets);
   } catch (error) {

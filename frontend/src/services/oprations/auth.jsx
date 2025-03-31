@@ -17,18 +17,18 @@ export const signIn = (email, password, navigate) => async (dispatch) => {
     const now = new Date();
     // Save token and show success message
     const token = {
-      value: response.data,
-      token,
+      value: response.data.token,
+
       expiry: now.getTime() + 3 * 24 * 60 * 60 * 1000,
     };
-    localStorage.setItem("token", token);
+    localStorage.setItem("token", JSON.stringify(token));
     localStorage.setItem("user", JSON.stringify(response.data));
     toast.success("LogIn Successfully", { id: toastId });
     navigate("/");
     dispatch(loginSuccess(response.data));
   } catch (error) {
     // Handle error
-    toast.error(error.response?.data?.message || "Login Failed", {
+    toast.error(error.response?.message || "Login Failed", {
       id: toastId,
     });
     dispatch(loginFailure(error.response?.data?.message));
@@ -54,6 +54,7 @@ export const signUp = (data, navigate) => async (dispatch) => {
     toast.success("Sign Up Successfully!", { id: toastId });
     navigate("/signin");
   } catch (error) {
+    console.error(error);
     toast.error(error.response?.data?.message || "SignUp Failed", {
       id: toastId,
     });
