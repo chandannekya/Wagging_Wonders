@@ -3,6 +3,7 @@
 
 ## 🐶 About Wagging Wonders
 Wagging Wonders is an **event-driven, microservices-based** platform that helps pet lovers find pets nearby and connect with their owners in real time. The platform offers a seamless adoption experience by enabling direct chat with owners and integrating geolocation services.
+![Screenshot 2025-03-22 133847](https://github.com/user-attachments/assets/b7c8b0d8-dd8f-48b0-a3e9-7db6897fcd64)
 
 ## 🚀 Features
 - 📍 **Find Pets Nearby** – Locate pets available for adoption based on your location.
