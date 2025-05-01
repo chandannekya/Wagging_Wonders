@@ -1,5 +1,5 @@
 import React from "react";
-import DonatePetForm from "../components/DonatepetForm.jsx";
+import DonatePetForm from "../components/DonatePetForm";
 
 const DonatePet = () => {
   return (
