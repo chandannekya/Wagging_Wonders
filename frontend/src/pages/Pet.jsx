@@ -55,11 +55,11 @@ const Pet = () => {
       {/* Pet Details Section */}
       <div className="flex flex-col md:flex-row gap-8 border-2 p-3 rounded-xl border-secondaryOrange">
         {/* Pet Image */}
-        <div className="md:w-1/3 w-full">
+        <div className="md:w-1/3 w-full items-center flex justify-center">
           <img
             src={data.photo}
             alt={data.name}
-            className="w-full h-auto object-cover rounded-xl shadow-lg"
+            className="w-full h-auto object-cover rounded-xl "
           />
         </div>
 
@@ -96,7 +96,10 @@ const Pet = () => {
             >
               Request Adopt
             </button>
-            <button className="bg-primaryYellow px-4 p-2 rounded-md border-b-2  border-yellow-300">
+            <button
+              className="bg-primaryYellow px-4 p-2 rounded-md border-b-2  border-yellow-300"
+              onClick={() => navigate("")}
+            >
               Chat{" "}
             </button>
           </div>

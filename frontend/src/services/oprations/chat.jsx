@@ -63,10 +63,12 @@ export const getChatRoom = async (userId) => {
   }
 };
 
-export const getChats = async () => {
+export const getChats = async (navigate) => {
   try {
     const tokenData = JSON.parse(localStorage.getItem("token"));
-    if (!tokenData) throw new Error("Token not found");
+    if (!tokenData) {
+      throw new Error("Token not found");
+    }
 
     const token = tokenData.value;
 
@@ -74,11 +76,18 @@ export const getChats = async () => {
       headers: { Authorization: `Bearer ${token}` },
     });
 
+    // Check for success status in the response
+    if (response.status !== 200) {
+      throw new Error("Failed to fetch chats");
+    }
+
     return response.data;
   } catch (error) {
-    console.error(
-      "Error while calling getChats API: ",
-      error.response?.data || error.message
-    );
+    console.error("Error while calling getChats API:", error);
+
+    // Navigate to error page on failure
+    if (navigate) {
+      navigate("/error");
+    }
   }
 };

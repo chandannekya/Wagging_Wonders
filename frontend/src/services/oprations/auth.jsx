@@ -19,7 +19,8 @@ export const signIn = (email, password, navigate) => async (dispatch) => {
     const token = {
       value: response.data.token,
 
-      expiry: now.getTime() + 3 * 24 * 60 * 60 * 1000,
+      // expiry: now.getTime() + 24 * 60 * 60 * 1000,
+      expiry: now.getTime() + 24 * 60 * 60 * 1000,
     };
     localStorage.setItem("token", JSON.stringify(token));
     localStorage.setItem("user", JSON.stringify(response.data));

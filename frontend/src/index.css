@@ -10,12 +10,19 @@
   --color-errorRed: #ff4d4d;
 }
 
+/* Container for positioning the rectangle */
+.container {
+  position: relative; /* Ensure the parent container is relative for proper absolute positioning */
+}
+
+/* Rectangle */
 .rectangle {
   position: absolute;
   width: 250px;
   height: 150px;
   left: 20px;
-  top: 1200px;
+  top: 50%; /* Adjusted to position it vertically */
+  transform: translateY(-50%); /* Center it vertically */
   background: rgba(214, 70, 195, 0.1);
   filter: blur(34.5px);
   border-radius: 70px;
@@ -29,7 +36,8 @@
     width: 400px;
     height: 250px;
     left: 100px;
-    top: 1500px;
+    top: 50%; /* Keep it centered on small screens */
+    transform: translateY(-50%); /* Maintain centering */
   }
 }
 
@@ -39,7 +47,8 @@
     width: 600px;
     height: 300px;
     left: 200px;
-    top: 1800px;
+    top: 50%; /* Maintain vertical centering */
+    transform: translateY(-50%); /* Ensure it's centered vertically */
   }
 }
 
@@ -49,12 +58,14 @@
     width: 892px;
     height: 394px;
     left: 338px;
-    top: 2079px;
+    top: 50%; /* Maintain centering */
+    transform: translateY(-50%); /* Keep the rectangle vertically centered */
   }
 }
 
-body {
+/* Reset margin and padding */
+body,
+html {
   margin: 0;
-
   padding: 0;
 }

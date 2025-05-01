@@ -7,13 +7,13 @@ import { SlOptionsVertical } from "react-icons/sl";
 import { GrAttachment } from "react-icons/gr";
 import { IoSendSharp } from "react-icons/io5";
 
-// SOCKET SERVER URL
 const SOCKET_URL = "http://localhost:5003/"; // Replace with your server URL
 
 const Chatbox = () => {
   const [messages, setmessages] = useState([]);
   const [message, setmessage] = useState("");
   const [socket, setSocket] = useState(null);
+  const [error, setError] = useState(""); // Error handling state
   const location = useLocation();
   const chatContainerRef = useRef(null);
 
@@ -36,6 +36,11 @@ const Chatbox = () => {
       }
     });
 
+    newSocket.on("connect_error", (err) => {
+      setError("Failed to connect to the server. Please try again later.");
+      console.error("Socket connection error", err);
+    });
+
     return () => {
       newSocket.disconnect();
     };
@@ -46,9 +51,9 @@ const Chatbox = () => {
     const fetchChat = async () => {
       try {
         const res = await getChat(chatId);
-        console.log("chatId", res);
         setmessages(res);
       } catch (err) {
+        setError("Failed to load chat history. Please try again later.");
         console.error("Error fetching chat history", err);
       }
     };
@@ -79,11 +84,9 @@ const Chatbox = () => {
     setmessages((prev) => [...prev, newMessage]);
 
     try {
-      // await sendMessage(message, receverId, chatId);
-      // Emit to other users
-
       socket.emit("sendMessage", newMessage);
     } catch (err) {
+      setError("Failed to send message. Please try again later.");
       console.error("Message failed to send", err);
     }
 
@@ -107,6 +110,11 @@ const Chatbox = () => {
         </div>
         <SlOptionsVertical className="text-[var(--color-textGray)]" />
       </div>
+
+      {/* Display Error */}
+      {error && (
+        <div className="text-center py-10 text-xl text-red-500">{error}</div>
+      )}
 
       {/* Messages */}
       <div
