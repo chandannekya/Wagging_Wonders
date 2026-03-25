@@ -10,6 +10,14 @@ import Petlisting from "./pages/Petlisting";
 import Pet from "./pages/Pet";
 import DonatePet from "./pages/DonatePet";
 import ErrorPage from "./pages/ErrorPage";
+import Donation from "./pages/Donation";
+import Grooming from "./pages/Grooming";
+import Veterinary from "./pages/Veterinary";
+import Training from "./pages/Training";
+import Blog from "./pages/Blog";
+import Store from "./pages/Store";
+import PaymentSuccess from "./pages/PaymentSuccess";
+import PaymentCancel from "./pages/PaymentCancel";
 import { logout } from "./slices/authSlice";
 
 const PrivateRoute = ({ element }) => {
@@ -20,7 +28,7 @@ const PrivateRoute = ({ element }) => {
 const App = () => {
   const dispatch = useDispatch();
   // const tokenData = useSelector((state) => state.auth.token);
-  const tokenData = JSON.parse(localStorage.getItem("token"));
+  const tokenData = localStorage.getItem("token");
 
   useEffect(() => {
     if (tokenData) {
@@ -49,6 +57,14 @@ const App = () => {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/pets" element={<Petlisting />} />
         <Route path="/pets/:id" element={<Pet />} />
+        <Route path="/donation" element={<Donation />} />
+        <Route path="/grooming" element={<Grooming />} />
+        <Route path="/vets" element={<Veterinary />} />
+        <Route path="/training" element={<Training />} />
+        <Route path="/blog" element={<Blog />} />
+        <Route path="/store" element={<Store />} />
+        <Route path="/success" element={<PaymentSuccess />} />
+        <Route path="/cancel" element={<PaymentCancel />} />
 
         {/* Private Routes */}
         <Route path="/chat/:id" element={<PrivateRoute element={<Chat />} />} />

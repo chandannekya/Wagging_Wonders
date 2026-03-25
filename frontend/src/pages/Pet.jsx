@@ -1,15 +1,17 @@
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { IoArrowBackCircle } from "react-icons/io5";
+import { IoArrowBackOutline, IoLocationOutline } from "react-icons/io5";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import { AdoptPet } from "../services/oprations/pet";
 import { useDispatch } from "react-redux";
+import { motion } from "framer-motion";
+
 const Pet = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { data } = location.state || {}; // Ensure data exists
+  const { data } = location.state || {};
 
   const adoptHandler = async () => {
     try {
@@ -18,107 +20,124 @@ const Pet = () => {
       console.log(error);
     }
   };
-  // Handle missing data gracefully
+
   if (!data) {
     return (
-      <div className="w-full h-screen flex flex-col justify-center items-center text-center">
-        <p className="text-2xl font-semibold text-red-500 mb-4">
-          No pet data available.
-        </p>
+      <div className="w-full h-screen flex flex-col justify-center items-center text-center bg-[#fafafa]">
+        <p className="text-2xl font-bold text-gray-400 mb-4">Pet not found</p>
         <button
           onClick={() => navigate(-1)}
-          className="px-5 py-2 bg-secondaryOrange text-white rounded-lg hover:bg-opacity-80 transition"
+          className="px-6 py-2 bg-[#FF8B4D] text-white rounded-lg hover:bg-[#ff7a33] transition-colors"
         >
-          Go Back
+          Return
         </button>
       </div>
     );
   }
 
-  // Leaflet Map Configuration
-  const position = [
-    data.location.latitude || 26.8467, // Default to Lucknow if no data
-    data.location.longitude || 80.9462,
-  ];
+  const position = [data.location?.latitude || 26.8467, data.location?.longitude || 80.9462];
 
   return (
-    <div className="w-full max-w-5xl mx-auto p-6">
-      {/* Header */}
-      <div className="flex items-center gap-4 mb-6">
-        <IoArrowBackCircle
-          className="text-4xl cursor-pointer hover:scale-105 transition"
+    <div className="min-h-screen bg-[#fafafa] pt-28 pb-20 px-4 md:px-8 lg:px-12 flex flex-col items-center">
+      <div className="w-full max-w-5xl flex flex-col gap-8">
+        
+        {/* Navigation */}
+        <button 
           onClick={() => navigate(-1)}
-        />
-        <h1 className="text-4xl font-extrabold">{data.name}</h1>
-      </div>
-
-      {/* Pet Details Section */}
-      <div className="flex flex-col md:flex-row gap-8 border-2 p-3 rounded-xl border-secondaryOrange">
-        {/* Pet Image */}
-        <div className="md:w-1/3 w-full items-center flex justify-center">
-          <img
-            src={data.photo}
-            alt={data.name}
-            className="w-full h-auto object-cover rounded-xl "
-          />
-        </div>
-
-        {/* Pet Description */}
-        <div className="flex-1">
-          <h2 className="text-3xl font-bold mb-2">Description</h2>
-          <p className="text-lg text-gray-600">
-            {data.description || "No description available."}
-          </p>
-
-          {/* Pet Info using .map() */}
-          <div className="flex flex-col gap-2 text-lg text-gray-600">
-            {[
-              { label: "Breed", value: data.breed },
-              { label: "Gender", value: data.gender },
-              { label: "Age", value: `${data.age} years` },
-              { label: "Species", value: data.species },
-              { label: "Temperament", value: data.temperament },
-              {
-                label: "Address",
-                value: `${data.location.city}, ${data.location.state}`,
-              },
-            ].map((item, index) => (
-              <span key={index}>
-                <strong>{item.label}:</strong> {item.value}
-              </span>
-            ))}
-          </div>
-          <div className="flex gap-4 mt-4">
-            {" "}
-            <button
-              className="bg-secondaryOrange p-2 rounded-md border-b-2  border-orange-300 hover:scale-105 "
-              onClick={adoptHandler}
-            >
-              Request Adopt
-            </button>
-            <button
-              className="bg-primaryYellow px-4 p-2 rounded-md border-b-2  border-yellow-300"
-              onClick={() => navigate("")}
-            >
-              Chat{" "}
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* Leaflet Map */}
-      <div className="mt-8">
-        <h2 className="text-2xl font-semibold mb-2">Pet Location</h2>
-        <MapContainer
-          center={position}
-          zoom={12}
-          style={{ height: "300px", width: "100%", borderRadius: "10px" }}
+          className="flex items-center gap-2 text-gray-500 hover:text-[#FF8B4D] transition-colors w-fit font-medium text-sm"
         >
-          <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-          <Marker position={position}>
-            <Popup>{data.name} is here!</Popup>
-          </Marker>
-        </MapContainer>
+          <IoArrowBackOutline /> Back to listings
+        </button>
+
+        <div className="flex flex-col md:flex-row gap-10 bg-white p-6 md:p-8 rounded-3xl shadow-sm border border-gray-100">
+          
+          {/* Image */}
+          <div className="md:w-1/2 flex flex-col">
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="w-full h-[400px] md:h-[500px] rounded-2xl overflow-hidden bg-gray-100 border border-gray-100"
+            >
+              <img
+                src={data.photo || "https://via.placeholder.com/500"}
+                alt={data.name}
+                className="w-full h-full object-cover"
+              />
+            </motion.div>
+          </div>
+
+          {/* Details */}
+          <div className="md:w-1/2 flex flex-col">
+            <div className="flex items-center gap-3 mb-3">
+              <span className="bg-[#FF4DBB]/10 text-[#FF4DBB] text-xs font-bold px-3 py-1 rounded-full uppercase tracking-widest">{data.species}</span>
+              <span className="bg-[#FF8B4D]/10 text-[#FF8B4D] text-xs font-bold px-3 py-1 rounded-full uppercase tracking-widest">{data.gender}</span>
+            </div>
+            
+            <h1 className="text-4xl font-extrabold text-gray-900 tracking-tight mb-2">{data.name}</h1>
+            <p className="text-gray-500 font-medium text-lg mb-6 flex items-center gap-2">
+              <IoLocationOutline className="text-[#FFDE79] text-2xl" /> {data.location?.city || 'Unknown Location'}, {data.location?.state || ''}
+            </p>
+
+            <div className="grid grid-cols-2 gap-y-6 gap-x-4 mb-8">
+              <div>
+                <p className="text-xs text-gray-400 font-semibold uppercase tracking-wider mb-1">Breed</p>
+                <p className="text-gray-900 font-medium">{data.breed}</p>
+              </div>
+              <div>
+                <p className="text-xs text-gray-400 font-semibold uppercase tracking-wider mb-1">Age</p>
+                <p className="text-gray-900 font-medium">{data.age || '?'} years</p>
+              </div>
+              <div>
+                <p className="text-xs text-gray-400 font-semibold uppercase tracking-wider mb-1">Temperament</p>
+                <p className="text-gray-900 font-medium">{data.temperament}</p>
+              </div>
+              <div>
+                <p className="text-xs text-gray-400 font-semibold uppercase tracking-wider mb-1">Status</p>
+                <p className="text-green-500 font-medium">Available</p>
+              </div>
+            </div>
+
+            <div className="mb-8">
+              <p className="text-xs text-gray-400 font-semibold uppercase tracking-wider mb-2">About</p>
+              <p className="text-gray-600 leading-relaxed text-sm">
+                {data.description || `${data.name} is looking for a loving home! Get in touch with the owner to learn more.`}
+              </p>
+            </div>
+
+            <div className="mt-auto flex gap-4">
+              <button
+                className="flex-1 bg-[#FF8B4D] text-white font-semibold py-4 rounded-xl shadow-md hover:bg-[#ff7a33] hover:shadow-lg hover:-translate-y-0.5 transition-all text-sm"
+                onClick={adoptHandler}
+              >
+                Apply to Adopt
+              </button>
+              <button
+                className="flex-1 bg-white border-2 border-[#FFDE79] text-gray-900 font-semibold py-4 rounded-xl hover:bg-yellow-50 transition-colors text-sm"
+                onClick={() => navigate(`/chat/${data.postedBy}`)}
+              >
+                Message Owner
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Map Section */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="bg-white p-6 md:p-8 rounded-3xl shadow-sm border border-gray-100 flex flex-col"
+        >
+          <h2 className="text-xl font-bold text-gray-900 mb-6 tracking-tight flex items-center gap-2">Reported Location <span className="text-2xl">📍</span></h2>
+          <div className="w-full h-[300px] rounded-xl overflow-hidden bg-gray-100 relative z-0 border border-gray-200">
+            <MapContainer center={position} zoom={13} style={{ height: "100%", width: "100%" }}>
+              <TileLayer url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png" />
+              <Marker position={position}>
+                <Popup className="font-raleway font-semibold text-gray-800">{data.name}'s general area.</Popup>
+              </Marker>
+            </MapContainer>
+          </div>
+        </motion.div>
+
       </div>
     </div>
   );

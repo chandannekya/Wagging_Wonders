@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const tokenData = localStorage.getItem("token")
-  ? JSON.parse(localStorage.getItem("token"))
-  : null;
+const tokenData = localStorage.getItem("token");
+// ? JSON.parse(localStorage.getItem("token"))
+// : null;
 
 const userData =
   tokenData && tokenData.expiry > new Date().getTime()

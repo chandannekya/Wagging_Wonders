@@ -15,6 +15,12 @@ services:
       - auth-service
       - chat-service
       - pets-service
+      - donation-service
+      - grooming-service
+      - vet-service
+      - training-service
+      - blog-service
+      - store-service
     networks:
       - mynetwork
     restart: always
@@ -45,6 +51,66 @@ services:
       - "5003:5003"
     env_file:
       - ./services/chat-service/.env
+    networks:
+      - mynetwork
+    restart: always
+
+  donation-service:
+    build: ./services/donation-service
+    ports:
+      - "5004:5004"
+    env_file:
+      - ./services/donation-service/.env
+    networks:
+      - mynetwork
+    restart: always
+
+  grooming-service:
+    build: ./services/grooming-service
+    ports:
+      - "5005:5005"
+    env_file:
+      - ./services/grooming-service/.env
+    networks:
+      - mynetwork
+    restart: always
+
+  vet-service:
+    build: ./services/vet-service
+    ports:
+      - "5006:5006"
+    env_file:
+      - ./services/vet-service/.env
+    networks:
+      - mynetwork
+    restart: always
+
+  training-service:
+    build: ./services/training-service
+    ports:
+      - "5007:5007"
+    env_file:
+      - ./services/training-service/.env
+    networks:
+      - mynetwork
+    restart: always
+
+  blog-service:
+    build: ./services/blog-service
+    ports:
+      - "5008:5008"
+    env_file:
+      - ./services/blog-service/.env
+    networks:
+      - mynetwork
+    restart: always
+
+  store-service:
+    build: ./services/store-service
+    ports:
+      - "5009:5009"
+    env_file:
+      - ./services/store-service/.env
     networks:
       - mynetwork
     restart: always

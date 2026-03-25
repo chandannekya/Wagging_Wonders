@@ -17,9 +17,13 @@ const Navbar = () => {
 
   const navLinks = useMemo(
     () => [
-      { to: "/about", label: "About" },
-      { to: "/contact", label: "Contact Us" },
-      { to: "/donate", label: "Donate" },
+      { to: "/pets", label: "Adopt" },
+      { to: "/grooming", label: "Grooming" },
+      { to: "/vets", label: "Vets" },
+      { to: "/store", label: "Store" },
+      { to: "/training", label: "Training" },
+      { to: "/blog", label: "Blog" },
+      { to: "/donation", label: "Donate" },
     ],
     []
   );
@@ -41,7 +45,7 @@ const Navbar = () => {
     >
       <div className="bg-white w-full md:w-3/4 items-center text-black font-raleway font-medium text-lg md:text-xl flex justify-between shadow-lg shadow-[#D9D9D9] border-t-[1.5px] border-[#D9D9D9] rounded-2xl m-3">
         {/* Left Nav Links */}
-        <div className="hidden md:flex w-1/3 p-3 md:p-5 justify-around">
+        <div className="hidden lg:flex w-2/5 p-2 lg:p-5 justify-around text-[14px] xl:text-[16px] gap-4">
           {navLinks.map((link) => (
             <NavLink
               key={link.to}
@@ -56,7 +60,7 @@ const Navbar = () => {
         </div>
 
         {/* Center Logo */}
-        <div className="relative flex w-1/2 md:w-1/3 justify-center items-center">
+        <div className="relative flex w-1/5 justify-center items-center">
           <div className="flex justify-center items-center relative">
             <img
               src={logo}
@@ -74,7 +78,7 @@ const Navbar = () => {
         </div>
 
         {/* Right Section */}
-        <div className="flex p-2 md:p-4 w-1/3 justify-end gap-2 relative">
+        <div className="flex p-2 md:p-4 w-2/5 justify-end items-center gap-2 relative">
           <NavLink to={"/chat"}>
             <SiGooglemessages className="text-3xl cursor-pointer" />
           </NavLink>

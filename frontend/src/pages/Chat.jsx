@@ -5,25 +5,24 @@ import Chatlist from "../components/Chatlist";
 
 const Chat = () => {
   const params = useParams();
-  const chatId = params.id; // Get chat ID from URL parameter
+  const chatId = params.id;
 
   return (
-    <div className="flex flex-col lg:flex-row w-full h-screen overflow-hidden">
-      {/* For small screens (below 1024px), show Chatlist or Chatbox based on chatId */}
-      <div className="lg:hidden w-full">
-        {chatId ? (
-          <Chatbox /> // Display Chatbox if chatId is available
-        ) : (
-          <Chatlist /> // Otherwise, display Chatlist
-        )}
+    <div className="flex flex-col lg:flex-row w-full h-[100dvh] overflow-hidden bg-gray-50 font-raleway pt-20">
+      
+      {/* Mobile view */}
+      <div className="lg:hidden w-full h-full flex-1 overflow-hidden">
+        {chatId ? <Chatbox /> : <Chatlist />}
       </div>
 
-      {/* For larger screens (above 1024px), display both Chatlist and Chatbox */}
-      <div className="lg:w-1/4 hidden lg:block">
-        <Chatlist />
-      </div>
-      <div className="lg:w-3/4 w-full">
-        <Chatbox />
+      {/* Desktop view */}
+      <div className="hidden lg:flex w-full h-[calc(100vh-80px)] max-w-[1600px] mx-auto border-x border-gray-100 bg-white shadow-2xl rounded-t-3xl overflow-hidden mt-6">
+        <div className="w-[350px] xl:w-[400px] flex-shrink-0 border-r border-[#FFDE79]/30 bg-white">
+          <Chatlist />
+        </div>
+        <div className="flex-1 bg-[#fafafa]">
+          <Chatbox />
+        </div>
       </div>
     </div>
   );
